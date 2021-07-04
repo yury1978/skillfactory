@@ -1,3 +1,5 @@
+import random
+
 area_x0 = [['-', '-', '-'],
            ['-', '-', '-'],
            ['-', '-', '-']
@@ -13,12 +15,21 @@ def display_x0():
         print('---------------------------')
 
 
-def next_move():
+def next_move(player):
     """ ВВод очередного хода игрока и компьютера """
     while True:
         if player == 'X':
-            n_str = int(input('Введите номер строки - '))
-            n_col = int(input('Введите номер столбца - '))
+            str_ = input('Введите номер строки - ')
+            col_ = input('Введите номер столбца - ')
+            if not str_.isdigit() or not col_.isdigit():
+                print('Введите цифры')
+                continue
+            else:
+                n_str = int(str_)
+                n_col = int(col_)
+            if n_str > 2 or n_col > 2:
+                print('Неверное значение столбца или строки')
+                continue
             if area_x0[n_str][n_col] != '-':
                 print('Неверный ход')
                 continue
@@ -63,30 +74,33 @@ def win_x0():
             return True
 
 
-player = 'X'  # Маркер очереди хода
-move_count = 0
-import random
+def game():
+    player = 'X'  # Маркер очереди хода
+    move_count = 0
 
-while True:
-    move_count += 1
-    display_x0()
-
-    if player == 'X':
-        print('Игрок_1 - ваш ход')
-        n_str, n_col = next_move()
-        area_x0[n_str][n_col] = 'X'
-        player = 'O'
-    else:
-        print('Ход PC')
-        n_str, n_col = next_move()
-        area_x0[n_str][n_col] = 'O'
-        player = 'X'
-
-    if win_x0():
+    while True:
+        move_count += 1
         display_x0()
-        break
 
-    if move_count == 9:
-        print(' Ничья ')
-        display_x0()
-        break
+        if player == 'X':
+            print('Игрок_1 - ваш ход')
+            n_str, n_col = next_move(player)
+            area_x0[n_str][n_col] = 'X'
+            player = 'O'
+        else:
+            print('Ход PC')
+            n_str, n_col = next_move(player)
+            area_x0[n_str][n_col] = 'O'
+            player = 'X'
+
+        if win_x0():
+            display_x0()
+            break
+
+        if move_count == 9:
+            print(' Ничья ')
+            display_x0()
+            break
+
+
+game()

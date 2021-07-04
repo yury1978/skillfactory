@@ -14,7 +14,7 @@ def game_core_v2(number):
 
         if predict > number:
             border_max = predict  # сдвигаем правую границу
-        elif predict < number:
+        else:
             border_min = predict  # сдвигаем левую границу
 
         predict = border_max - (border_max - border_min) // 2
